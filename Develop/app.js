@@ -46,11 +46,10 @@ inquirer
         people.push(newManager)
 
         let addNewEmployee = false
-
         while (addNewEmployee === false) {
-            inquirer
-                .prompt([
 
+        inquirer
+                .prompt([
                     {
                         message: "Which employee would you like?",
                         name: "employeechoices",
@@ -62,9 +61,57 @@ inquirer
                 ]).then(function (employeeAnswer) {
                     if (employeeAnswer.employeechoices === "Engineer") {
                         //Inquerer engineer
+                        inquirer
+                            .prompt([
+                                {
+                                    message: "What is your Engineer's name?",
+                                    name: "engineername",
+                                    type: "input"
+                                },
+                                {
+                                    message: "What is your Engineer's id",
+                                    name: "engineerid",
+                                    type: "number"
+                                },
+                                {
+                                    message: "What is your Engineer's email?",
+                                    name: "engineeremail",
+                                    type: "input"
+                                },
+                                {
+                                    message: "What is your Engineer's GitHub?",
+                                    name: "engineergithub",
+                                    type: "input"
+                                },
+                            ])
 
                     } else if (employeeAnswer.employeechoices === "Intern") {
                         //inquirer
+                        inquirer
+                            .prompt([
+                                {
+                                    message: "What is your Intern's name?",
+                                    name: "internname",
+                                    type: "input"
+                                },
+                                {
+                                    message: "What is your Intern's id",
+                                    name: "internid",
+                                    type: "number"
+                                },
+                                {
+                                    message: "What is your intern's email?",
+                                    name: "Internemail",
+                                    type: "input"
+                                },
+                                {
+                                    message: "What is your Intern's school?",
+                                    name: "internschool",
+                                    type: "input"
+                                },
+                            ])
+
+
                     } else {
                         addNewEmployee = true;
 
@@ -74,13 +121,16 @@ inquirer
                         //fs write file (activity 6 node.js)
                         fs.writeFile()
                     }
-                }
+                })
+        }
+    })
+
 
             // console.log(people)
 
 
 
-        }
+
 
 
 
@@ -107,4 +157,4 @@ inquirer
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an 
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!```
+// for the provided `render` function to work!`
