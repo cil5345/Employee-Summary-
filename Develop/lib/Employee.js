@@ -4,7 +4,7 @@ class Employee {
     constructor(name, id, email) {
         this.name = name;
         this.id = id;
-        this.email = email
+        this.email = email;
     }
     getName() {
         return this.name
@@ -21,7 +21,7 @@ class Employee {
 }
 // let aliceName = new Employee("Alice")
 // console.log(aliceName)
-const alice = new Employee("Alice", 1, "test@test")
-console.log(alice)
+const alice = new Employee("Alice", 1, "test@test");
+console.log(alice);
 
 module.exports = Employee;
