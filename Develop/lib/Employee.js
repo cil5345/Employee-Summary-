@@ -22,6 +22,6 @@ class Employee {
 // let aliceName = new Employee("Alice")
 // console.log(aliceName)
 const alice = new Employee("Alice", 1, "test@test");
-console.log(alice);
+// console.log(alice);
 
 module.exports = Employee;
