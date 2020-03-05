@@ -10,12 +10,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+//people array
 const people = []
 
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-//questions 
+//initial manager questions
 inquirer
     .prompt([
         {
@@ -41,120 +39,98 @@ inquirer
 
     ])
     .then(function (manageranswer) {
-        console.log(manageranswer)
         const newManager = new Manager(manageranswer.managername, manageranswer.managerid, manageranswer.manageremail, manageranswer.managerofficenumber)
         people.push(newManager)
 
         let addNewEmployee = false
-        while (addNewEmployee === false) {
+        
+        //askQuestion function shows list of employee options
+        function askQuestion() {
+            if (addNewEmployee === false) {
+                inquirer
+                    .prompt([
+                        {
+                            message: "Which employee would you like?",
+                            name: "employeechoices",
+                            type: "list",
+                            choices: ["Engineer", "Intern", "I don't want to add any more"]
+                        }
+                    ]).then(function (employeeAnswer) {
+                        if (employeeAnswer.employeechoices === "Engineer") {
+                            inquirer
+                                .prompt([
+                                    {
+                                        message: "What is your Engineer's name?",
+                                        name: "engineername",
+                                        type: "input"
+                                    },
+                                    {
+                                        message: "What is your Engineer's id",
+                                        name: "engineerid",
+                                        type: "number"
+                                    },
+                                    {
+                                        message: "What is your Engineer's email?",
+                                        name: "engineeremail",
+                                        type: "input"
+                                    },
+                                    {
+                                        message: "What is your Engineer's GitHub?",
+                                        name: "engineergithub",
+                                        type: "input"
+                                    }
+                                ])
+                                .then(function (engineeranswer) {
+                                    const newEngineer = new Engineer(engineeranswer.engineername, engineeranswer.engineerid, engineeranswer.engineeremail, engineeranswer.engineergithub)
+                                    people.push(newEngineer)
+                                    askQuestion();
 
-        inquirer
-                .prompt([
-                    {
-                        message: "Which employee would you like?",
-                        name: "employeechoices",
-                        type: "list",
-                        choices: ["Engineer", "Intern", "I don't want to add any more"]
-                    },
+                                })
+                        } else if (employeeAnswer.employeechoices === "Intern") {
+                            inquirer
+                                .prompt([
+                                    {
+                                        message: "What is your Intern's name?",
+                                        name: "internname",
+                                        type: "input"
+                                    },
+                                    {
+                                        message: "What is your Intern's id",
+                                        name: "internid",
+                                        type: "number"
+                                    },
+                                    {
+                                        message: "What is your intern's email?",
+                                        name: "Internemail",
+                                        type: "input"
+                                    },
+                                    {
+                                        message: "What is your Intern's school?",
+                                        name: "internschool",
+                                        type: "input"
+                                    },
+                                ])
+                                .then(function (internanswer) {
+                                    const newIntern = new Intern(internanswer.internname, internanswer.internid, internanswer.internemail, internanswer.internschool)
+                                    people.push(newIntern)
+                                    askQuestion();
+                                });
 
+                        } else {
+                            let renderedPeople = render(people)
+                            fs.writeFile(outputPath, renderedPeople, function (err) {
 
-                ]).then(function (employeeAnswer) {
-                    if (employeeAnswer.employeechoices === "Engineer") {
-                        //Inquerer engineer
-                        inquirer
-                            .prompt([
-                                {
-                                    message: "What is your Engineer's name?",
-                                    name: "engineername",
-                                    type: "input"
-                                },
-                                {
-                                    message: "What is your Engineer's id",
-                                    name: "engineerid",
-                                    type: "number"
-                                },
-                                {
-                                    message: "What is your Engineer's email?",
-                                    name: "engineeremail",
-                                    type: "input"
-                                },
-                                {
-                                    message: "What is your Engineer's GitHub?",
-                                    name: "engineergithub",
-                                    type: "input"
-                                },
-                            ])
+                                if (err) {
+                                    return console.log(err);
+                                }
 
-                    } else if (employeeAnswer.employeechoices === "Intern") {
-                        //inquirer
-                        inquirer
-                            .prompt([
-                                {
-                                    message: "What is your Intern's name?",
-                                    name: "internname",
-                                    type: "input"
-                                },
-                                {
-                                    message: "What is your Intern's id",
-                                    name: "internid",
-                                    type: "number"
-                                },
-                                {
-                                    message: "What is your intern's email?",
-                                    name: "Internemail",
-                                    type: "input"
-                                },
-                                {
-                                    message: "What is your Intern's school?",
-                                    name: "internschool",
-                                    type: "input"
-                                },
-                            ])
+                                console.log("Success!");
 
-
-                    } else {
-                        addNewEmployee = true;
-
-                        //Render 
-                        const html = render();
-                        //write the html to the file
-                        //fs write file (activity 6 node.js)
-                        fs.writeFile()
-                    }
-                })
+                            });
+                        }
+                    })
+            };
         }
+        askQuestion();
     })
 
-
-            // console.log(people)
-
-
-
-
-
-
-
-
-
-
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!`
