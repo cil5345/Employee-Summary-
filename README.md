@@ -1,5 +1,8 @@
 # Employee Generator
 
+![employeegenerator](https://user-images.githubusercontent.com/60113996/75990584-1c9e6e00-5ec3-11ea-8ad7-ef3d47650cdb.jpg)
+
+
 
 ## Intro
  The generator creates a webpage with employee id, name, email, and employee specific parameter quickly through the terminal. This application is ideal for Human Resources employees who need to create a visual represenation of the employees at the company. Here is a video of the demo: https://drive.google.com/file/d/17SLW6Jk5MrD7M72JWiHviJVFbyNV-R8z/view
@@ -11,4 +14,3 @@ The generator runs in the terminal by using "node app.js". It uses a combination
 
 ------
 
-![employeepicture] (Employee-Summary-/images/employeegenerator.jpg)
